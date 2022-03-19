@@ -16,4 +16,14 @@ class TeacherController extends Controller
 
         return response()->json($data);
     }
+
+    public function addData(Request $request){
+        $data=Teacher::insert([
+            'name'=>$request->a,
+            'title'=>$request->title,
+            'institute'=>$request->institute,
+        ]);
+
+        return response()->json($data);
+    }
 }

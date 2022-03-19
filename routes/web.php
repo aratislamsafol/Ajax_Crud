@@ -24,3 +24,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/ajax',[TeacherController::class,'index']);
 Route::get('/teacher/all',[TeacherController::class,'allcat']);
+Route::post('/teacher/store/',[TeacherController::class,'addData']);
