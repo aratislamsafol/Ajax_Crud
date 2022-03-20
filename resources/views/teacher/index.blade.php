@@ -60,9 +60,9 @@
                             <input type="text" class="form-control" id="institute">
                             <span class="text-danger" id="insterror"></span>
                         </div>
-
+                        <input type="hidden" id="id">
                         <button type="submit" id="addbutton" onclick="addData()" class="btn btn-primary">Add</button>
-                        <button type="submit" id="updatebutton" class="btn btn-primary">Update</button>
+                        <button type="submit" id="updatebutton" onclick="updateData()" class="btn btn-primary">Update</button>
                     </div>
                 </div>
             </div>
@@ -155,10 +155,39 @@
                 dataType:"Json",
                 url:"/teacher/edit/"+id,
                 success:function(data){
+                    $('#addbutton').hide();
+                    $('#addT').hide();
+                    $('#updatebutton').show();
+                    $('#updateT').show();
+                    $('#id').val(data.id);
                     $('#xxx').val(data.name);
                     $('#title').val(data.title);
                     $('#institute').val(data.institute);
                     console.log(data);
+                }
+            });
+        }
+
+        function updateData(){
+            var id= $('#id').val();
+            var namex= $('#xxx').val();
+            var title= $('#title').val();
+            var institute= $('#institute').val();
+
+            $.ajax({
+                type:"POST",
+                dataType:"Json",
+                data:{a:namex, title:title, institute:institute},
+                url:"/teacher/update/"+id,
+
+                success:function(data){
+                    clearData();
+                    allData();
+                    $('#addbutton').show();
+                    $('#addT').show();
+                    $('#updatebutton').hide();
+                    $('#updateT').hide();
+                    console.log('Update data successfully');
                 }
             });
         }
