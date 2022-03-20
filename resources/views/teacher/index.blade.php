@@ -8,6 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <title>Teacher Details</title>
 </head>
 
@@ -98,7 +100,7 @@
                         data=data+"<td>"+value.institute+"</td>"
                         data=data+"<td>"
                         data=data+"<button class='btn btn-success' onclick='editData("+value.id+")'>Edit</button>"
-                        data=data+"<button class='btn btn-danger'>Delete</button>"
+                        data=data+"<button class='btn btn-danger' onclick='deleteData("+value.id+")'>Delete</button>"
                         data=data+"</td>"
                         data=data+"</tr>"
                     });
@@ -138,7 +140,14 @@
                     clearData();
                     allData();
 
-                    console.log('added data successfully');
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Complete',
+                    text: 'Data Added Successfully',
+                    // footer: '<a href="">Why do I have this issue?</a>'
+                    })
+
+                    // console.log('added data successfully');
                 },
                 error:function(error){
                     $('#nameerror').text(error.responseJSON.errors.a);
@@ -181,6 +190,12 @@
                 url:"/teacher/update/"+id,
 
                 success:function(data){
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Complete',
+                    text: 'Data Updated Successfully',
+                    // footer: '<a href="">Why do I have this issue?</a>'
+                    })
                     clearData();
                     allData();
                     $('#addbutton').show();
@@ -188,6 +203,41 @@
                     $('#updatebutton').hide();
                     $('#updateT').hide();
                     console.log('Update data successfully');
+                }
+            });
+        }
+
+        function deleteData(id){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    ),
+                    $.ajax({
+                        type:"GET",
+                        dataType:"json",
+                        url:"/teacher/delete/"+id,
+
+                        success:function(data){
+                            $('#addbutton').show();
+                            $('#addT').show();
+                            $('#updatebutton').hide();
+                            $('#updateT').hide();
+                            clearData();
+                            allData();
+                            console.log("deleted");
+                        }
+                    });
                 }
             });
         }
