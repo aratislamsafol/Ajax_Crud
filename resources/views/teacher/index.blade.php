@@ -49,16 +49,18 @@
                             <div class="mb-3">
                                 <label for="teacher_name" class="form-label">Teacher Name</label>
                                 <input type="text" class="form-control" id="xxx" aria-describedby="teacher_name">
-
+                                <span class="text-danger" id="nameerror"></span>
                             </div>
                             <div class="mb-3">
                                 <label for="teacher_title" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="title">
+                                <span class="text-danger" id="titleerror"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="institue" class="form-label">Institue</label>
                                 <input type="text" class="form-control" id="institute">
+                                <span class="text-danger" id="insterror"></span>
                             </div>
 
                             <button type="submit" id="addbutton" onclick="addData()" class="btn btn-primary">Add</button>
@@ -113,8 +115,11 @@
             $('#xxx').val('');
             $('#title').val('');
             $('#institute').val('');
+            $('#nameerror').text('');
+            $('#titleerror').text('');
+            $('#insterror').text('');
 
-            console.log(x);
+            // console.log(x);
         }
 
         function addData(){
@@ -137,6 +142,12 @@
                     allData();
 
                     console.log('added data successfully');
+                },
+                error:function(error){
+                    $('#nameerror').text(error.responseJSON.errors.a);
+                    $('#titleerror').text(error.responseJSON.errors.title);
+                    $('#insterror').text(error.responseJSON.errors.institute);
+                    // console.log(error.responseJSON.errors);
                 }
             });
         }

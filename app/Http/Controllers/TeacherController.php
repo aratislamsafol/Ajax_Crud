@@ -18,6 +18,12 @@ class TeacherController extends Controller
     }
 
     public function addData(Request $request){
+        $request->validate([
+            'a' => 'required',
+            'title' => 'required',
+            'institute' => 'required',
+        ]);
+
         $data=Teacher::insert([
             'name'=>$request->a,
             'title'=>$request->title,
