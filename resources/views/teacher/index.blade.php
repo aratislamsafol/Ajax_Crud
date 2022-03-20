@@ -44,28 +44,25 @@
                     </div>
 
                     <div class="card-body">
-                        {{-- <form action="" method="Post" enctype="multipart/form-data">
-                            @csrf --}}
-                            <div class="mb-3">
-                                <label for="teacher_name" class="form-label">Teacher Name</label>
-                                <input type="text" class="form-control" id="xxx" aria-describedby="teacher_name">
-                                <span class="text-danger" id="nameerror"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label for="teacher_title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="title">
-                                <span class="text-danger" id="titleerror"></span>
-                            </div>
+                        <div class="mb-3">
+                            <label for="teacher_name" class="form-label">Teacher Name</label>
+                            <input type="text" class="form-control" id="xxx" aria-describedby="teacher_name">
+                            <span class="text-danger" id="nameerror"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher_title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title">
+                            <span class="text-danger" id="titleerror"></span>
+                        </div>
 
-                            <div class="mb-3">
-                                <label for="institue" class="form-label">Institue</label>
-                                <input type="text" class="form-control" id="institute">
-                                <span class="text-danger" id="insterror"></span>
-                            </div>
+                        <div class="mb-3">
+                            <label for="institue" class="form-label">Institue</label>
+                            <input type="text" class="form-control" id="institute">
+                            <span class="text-danger" id="insterror"></span>
+                        </div>
 
-                            <button type="submit" id="addbutton" onclick="addData()" class="btn btn-primary">Add</button>
-                            <button type="submit" id="updatebutton" class="btn btn-primary">Update</button>
-                        {{-- </form> --}}
+                        <button type="submit" id="addbutton" onclick="addData()" class="btn btn-primary">Add</button>
+                        <button type="submit" id="updatebutton" class="btn btn-primary">Update</button>
                     </div>
                 </div>
             </div>
@@ -100,7 +97,7 @@
                         data=data+"<td>"+value.title+"</td>"
                         data=data+"<td>"+value.institute+"</td>"
                         data=data+"<td>"
-                        data=data+"<button class='btn btn-success'>Edit</button>"
+                        data=data+"<button class='btn btn-success' onclick='editData("+value.id+")'>Edit</button>"
                         data=data+"<button class='btn btn-danger'>Delete</button>"
                         data=data+"</td>"
                         data=data+"</tr>"
@@ -148,6 +145,20 @@
                     $('#titleerror').text(error.responseJSON.errors.title);
                     $('#insterror').text(error.responseJSON.errors.institute);
                     // console.log(error.responseJSON.errors);
+                }
+            });
+        }
+
+        function editData(id){
+            $.ajax({
+                type:"GET",
+                dataType:"Json",
+                url:"/teacher/edit/"+id,
+                success:function(data){
+                    $('#xxx').val(data.name);
+                    $('#title').val(data.title);
+                    $('#institute').val(data.institute);
+                    console.log(data);
                 }
             });
         }

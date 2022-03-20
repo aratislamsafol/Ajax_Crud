@@ -32,4 +32,11 @@ class TeacherController extends Controller
 
         return response()->json($data);
     }
+
+    public function editData($id)
+    {
+        $data_get=Teacher::findorFail($id);
+
+        return response()->json($data_get);
+    }
 }
